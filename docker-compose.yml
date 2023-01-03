@@ -1,4 +1,4 @@
-version: "3"
+version: "2.13"
 
 services:
   moonchausen-cms-db:
@@ -13,21 +13,6 @@ services:
       - 5432:5432
     networks:
       - moonchausen-network
-      
-  moonchausen-frontend:
-    container_name: moonchausen-frontend
-    build:
-      context: ./frontend
-      dockerfile: ./Dockerfile
-    restart: always
-    working_dir: /app
-    env_file: ./frontend/.env
-    ports:
-      - 3000:3000
-    networks:
-      - moonchausen-network
-    depends_on:
-      - moonchausen-cms
 
   moonchausen-cms:
     container_name: moonchausen-cms
@@ -50,6 +35,27 @@ services:
       - moonchausen-network
     depends_on:
       - moonchausen-cms-db
+      
+  moonchausen-frontend:
+    container_name: moonchausen-frontend
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile
+    restart: always
+    working_dir: /app
+    env_file: ./frontend/.env
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/package.json:/package.json
+      - ./frontend/yarn.lock:/yarn.lock
+      - ./frontend/next.config.js:/next.config.js
+      - ./frontend/.env:/app/.env
+    ports:
+      - 3000:3000
+    networks:
+      - moonchausen-network
+    depends_on:
+      - moonchausen-cms
 
 volumes:
   moonchausen-cms-data:
