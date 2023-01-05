@@ -1,20 +1,6 @@
-!/usr/bin/env bash
-set -x
-set -eo pipefail
-
-docker network create app_network
-
-export DATABASE_URL=postgres://postgres:password@localhost:5432/indexer
-export APP_DATABASE__USERNAME=postgres
-export APP_DATABASE__PASSWORD=password
-export APP_WEB3__POLYGONSCAN_API_KEY=K7VK9NWRGUP2K3ZSS8G9CU917N59FC53HF
-export APP_WEB3__ALCHEMY_API_URL=wss://polygon-mumbai.g.alchemy.com/v2/HaHeAQXwvaN-xjMwN_ptVGDBcmRbh0dM
-export CMS_DATABASE__USERNAME=postgres
-export CMS_DATABASE__PASSWORD=password
-export CMS_API_TOKEN=5ebcc743895e13f1e552f66ee35fb53fefe8f928ee1ad9945838e166f20ee35aa4b3f1b28e4972794d62da7d66467e449d7f4d49950ed53f5255a6b6b46f2fe3be233e21e8378b9949a94788ec85a4c10689e05c7ee34566e66bdc6d5a8aebbe1e59cbb1e2b3a01310ef61b5ad4bebb85ccc5df15d16f45649abf3955b544a56
-
-cd indexer
-# cargo watch -x run
-
-cd ..
-docker-compose up -d
+(
+    trap 'kill 0' SIGINT
+    (docker-compose up) &
+    (cd indexer && cargo run) &
+    wait
+)
