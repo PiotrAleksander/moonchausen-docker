@@ -42,6 +42,7 @@ services:
     env_file: ./frontend/.env
     volumes:
       - ./frontend/src:/app/src
+      - ./frontend/artifacts:/app/artifacts
       - ./frontend/package.json:/package.json
       - ./frontend/yarn.lock:/yarn.lock
       - ./frontend/next.config.js:/next.config.js
