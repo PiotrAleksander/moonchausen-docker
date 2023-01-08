@@ -43,10 +43,10 @@ services:
     volumes:
       - ./frontend/src:/app/src
       - ./frontend/artifacts:/app/artifacts
+      - ./frontend/typechain-types:/app/typechain-types
       - ./frontend/package.json:/package.json
       - ./frontend/yarn.lock:/yarn.lock
       - ./frontend/next.config.js:/next.config.js
-      - ./frontend/.env:/app/.env
     ports:
       - 3000:3000
     networks:
