@@ -31,22 +31,22 @@ services:
       - 1337:1337
     networks:
       - moonchausen-network
-      
-  moonchausen-frontend:
-    container_name: moonchausen-frontend
+
+  moonchausen-web:
+    container_name: moonchausen-web
     build:
-      context: ./frontend
+      context: ./web
       dockerfile: ./Dockerfile
+    image: moonchausen-web:latest
     restart: always
     working_dir: /app
-    env_file: ./frontend/.env
+    env_file: ./web/.env
     volumes:
-      - ./frontend/src:/app/src
-      - ./frontend/artifacts:/app/artifacts
-      - ./frontend/typechain-types:/app/typechain-types
-      - ./frontend/package.json:/package.json
-      - ./frontend/yarn.lock:/yarn.lock
-      - ./frontend/next.config.js:/next.config.js
+      - ./web/src:/app/src
+      - ./web/package.json:/package.json
+      - ./web/pnpm-lock.yaml:/pnpm-lock.yaml
+      - ./web/next.config.js:/next.config.js
+      - ./web/.next:/.next
     ports:
       - 3000:3000
     networks:
