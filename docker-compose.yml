@@ -32,26 +32,6 @@ services:
     networks:
       - moonchausen-network
 
-  moonchausen-web:
-    container_name: moonchausen-web
-    build:
-      context: ./web
-      dockerfile: ./Dockerfile
-    image: moonchausen-web:latest
-    restart: always
-    working_dir: /app
-    env_file: ./web/.env
-    volumes:
-      - ./web/src:/app/src
-      - ./web/package.json:/package.json
-      - ./web/pnpm-lock.yaml:/pnpm-lock.yaml
-      - ./web/next.config.js:/next.config.js
-      - ./web/.next:/.next
-    ports:
-      - 3000:3000
-    networks:
-      - moonchausen-network
-
 volumes:
   moonchausen-cms-data:
 
